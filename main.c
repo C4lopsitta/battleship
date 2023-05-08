@@ -13,6 +13,14 @@ int main (int argc, char **argv){
   clearScreen();
 
   char menuSelect = printSplashscreen();
+  switch (menuSelect) {
+    case 'h':
+      break;
+    case 'c':
+      updateConfig();
+    case 'q':
+      exit(0);
+  }
 
   //setup AI player
   Player* ai = setupAI();

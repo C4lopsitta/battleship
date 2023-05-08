@@ -95,16 +95,22 @@ void printTooltip(int*p, String extramsg){
 char printSplashscreen(){
   setCursor(4, 12);
   printf("---[ BATTLESHIPS ]---");
+  setCursor(8, 5);
+  printf("---[h]   [  HUMAN VS COMPUTER  ]---");
+  fflush(stdout);
   setCursor(9, 5);
   rgbText(127, 127, 127);
-  printf("---[h]   [  HUMAN VS COMPUTER  ]---");
-  setCursor(10, 5);
   printf("---[m]   [   HUAMN VS HUMAN    ]---");
-  setCursor(11, 5);
+  setCursor(10, 5);
   printf("---[s]   [ SERIAL  MULTIPLAYER ]---");
+  setCursor(11, 5);
+  printf("---[n]   [ NETWORK MULTIPLAYER ]---");
+  setCursor(12, 5);
+  printf("---[c]   [    MODIFY CONFIG    ]---");
   setCursor(13, 5);
+  rgbText(255, 16, 16);
+  printf("---[q]   [      QUIT GAME      ]---");
   clearText();
-  printf("---[ PRESS ANY KEY TO CONTINUE ]---");
   return getUserInput();
 }
 

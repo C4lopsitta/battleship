@@ -173,5 +173,6 @@ void playerTurn(Player*pl, Player*pl2){
   }
 }
 
+void updateConfig(){};
 
 #endif //endif __LIBUTILS_H__
