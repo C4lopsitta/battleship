@@ -3,10 +3,12 @@
 
 void printHintbar();
 void mesg(String);
-void mesgWarn(String);void printFieldItem(char);
+void mesgWarn(String);
+void printFieldItem(char);
 void printFieldItemHidden(char);
 void printPlayerField(Player*);
 void printPlayerFieldHidden(Player*);
+void mesgDebug(String);
 
 
 void printHintbar(String returnMesg, int showRotate){
@@ -28,10 +30,24 @@ void mesgWarn(String mesgs){
   clearText();
 }
 
+#ifdef DEBUG
+void mesgDebug(String mesgs){
+  setCursor(MESG_X+5, MESG_Y);
+  printf("DEBUG : %s\n", mesgs);
+}
+#else 
+  void mesgDebug(String mesgs){}
+#endif // DEBUG
+
 void printFieldItem(char item){
   String items[] = {" . ", " C ", " B ", "~C~", " D ", " D ", " S ", " S "};
-  if(item > SUBMARINEB) crossedText();
-  printf("%s", items[(item-'a'>DELTA)?item-'a'-DELTA:item-'a']);
+  //makes water = 0 to ease readability, check libdefines.h for more details
+  item -= WATER;
+  if(item >= DELTA){
+    crossedText();
+    item -= DELTA;
+  }
+  printf("%s", items[item]);
   clearText();
 }
 

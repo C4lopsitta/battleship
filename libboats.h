@@ -7,6 +7,7 @@ int putBoat(Player*, byte, byte, BoatType, int, int);
 void removeBoat(Player*, byte, byte);
 int boatsLeft(Player*);
 int isBoatFullyHit(Player*, int, int);
+BoatType getBoatTypeByChar(char);
 int hitBoat(Player*, byte, byte);
 
 /*  BOATS                                       ROTATION DIRECTION
@@ -102,31 +103,30 @@ int getBoatLengthFromChar(char c){
 }
 
 int isBoatFullyHit(Player*p, int x, int y){
-  int boatLenght = getBoatLengthFromChar(p->field[y][x]);
-  int directionFlag;
-  if(p->field[y][x+1]==p->field[y][x] || p->field[y][x-1]==p->field[y][x]){
-    //x axis aligned
-    for(int i=0; i<boatLenght && x+i<FIELD_X; i++){
-      if(p->field[y][x+i]==p->field[y][x]) boatLenght--;
+  BoatType type = getBoatTypeByChar(p->field[y][x]);
+  int boatLenght = getBoatLengthFromType(type), flag = boatLenght;
+  // if(rotation == 0){ // ->
+    for(int i=0; i<boatLenght && (x+i)<FIELD_Y; i++){
+      if(p->field[y+i][x]==p->field[y][x]) flag--;
       else break;
     }
-    for(int i=0; i<boatLenght && x-i>=0; i++){
-      if(p->field[y][x-i]==p->field[y][x]) boatLenght--;
+  // }else if(rotation == 90 || rotation == -270){ // /
+    for(int i=0; i<boatLenght && (x-i)>=0; i++){
+      if(p->field[y][x-i]==p->field[y][x]) flag--;
       else break;
     }
-  }else{
-    //y axis aligned
-    for(int i=0; i<boatLenght && y+i<FIELD_Y; i++){
-      if(p->field[y+i][x]==p->field[y][x]) boatLenght--;
+  // }else if(rotation == 180 || rotation == -180){ // <-
+    for(int i=0; i<boatLenght && (y-i)>=0; i++){
+      if(p->field[y-i][x]==p->field[y][x]) flag--;
       else break;
     }
-    for(int i=0; i<boatLenght && y-i>=0; i++){
-      if(p->field[y-i][x]==p->field[y][x]) boatLenght--;
+  // }else{ // 360
+    for(int i=0; i<boatLenght && (x+i)<FIELD_X; i++){
+      if(p->field[y][x+i]==p->field[y][x]) flag--;
       else break;
     }
-  }
-  
-  return (boatLenght)?0:-1;
+  // }
+  return (flag)?0:-1;
 }
 
 BoatType getBoatTypeByChar(char c){
@@ -140,7 +140,10 @@ int hitBoat(Player*p, byte y, byte x){
   if(fieldPos >= HIT_WATER) return SHOT_DOUBLE;
   p->field[y][x] += DELTA;
   if(fieldPos == WATER) return SHOT_MISS;
-  if(isBoatFullyHit(p, x, y)) p->boats[getBoatTypeByChar(p->field[y][x])]--;
+  if(isBoatFullyHit(p, x, y)){
+    p->boats[getBoatTypeByChar(p->field[y][x])]--;
+    mesgDebug("HIT");
+  }
   return SHOT_HIT;
 }
 

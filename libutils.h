@@ -140,7 +140,7 @@ void playerTurn(Player*pl, Player*pl2){
   printHintbar("ATTACK!", 0);
   byte xcur = 0, ycur = 0;
   setCursor(1, 1);
-  printPlayerFieldHidden(pl2);
+  printPlayerField(pl2);
   printTooltip(pl->boats, "---[ Your boats ]---");
   mesg("Your turn!                     ");
   setCursorWithOffset(xcur, ycur);
