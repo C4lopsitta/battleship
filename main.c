@@ -41,28 +41,12 @@ int main (int argc, char **argv){
     //player turn
     playerTurn(pl, ai);
     //check mid turn if player already won
-    printHintbar("Continue", 0);
-    while(getUserInput() != '\n');
+    awaitUserConfirm();
     if(!boatsLeft(ai)) break;
     //ai turn
     aiTurn(ai, pl);
+    awaitUserConfirm();
   }
-  //   
-  //   //ai turn
-  //   mesg("AI player turn!                           ");
-  //   int res = SHOT_DOUBLE;
-  //   while(res == SHOT_DOUBLE){
-  //     int aiX = rand() % FIELD_X, aiY = rand() % FIELD_Y;
-  //     res = hitBoat(pl, aiX, aiY);
-  //     if(res == SHOT_HIT) mesgWarn("AI Hit your boat!                           ");
-  //     else mesg("AI Missed your boats!                            ");
-  //   }
-  //   ai->tries++;
-  //   setCursor(1, 1);
-  //   printPlayerField(pl);
-  //   printHintbar("Continue", 0);
-  //   while(getUserInput() != '\n'){}
-  // }
   clearScreen();
   setCursor(1, 1);
   if(!boatsLeft(ai)) printf("Player won in %d shots!\n", pl->tries);

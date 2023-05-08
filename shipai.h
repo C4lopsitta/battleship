@@ -26,7 +26,17 @@ void generateRandomField(Player*p){
 }
 
 void aiTurn(Player*ai, Player*pl){
-
+  mesg("AI Is thinking");
+  int res = SHOT_DOUBLE;
+  while(res == SHOT_DOUBLE){
+    int aiX = rand() % FIELD_X, aiY = rand() % FIELD_Y;
+    res = hitBoat(pl, aiX, aiY);
+  }
+  if(res == SHOT_MISS) mesg("AI Missed your boats!");
+  else mesg("AI Hit your boat!");
+  ai->tries++;
+  setCursor(1, 1);
+  printPlayerField(pl);
 }
 
 #endif //endif __SHIP_AI_H__

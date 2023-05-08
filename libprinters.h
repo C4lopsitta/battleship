@@ -61,6 +61,7 @@ void printFieldItemHidden(char item){
 void printPlayerField(Player*p){
   boldText();
   if(p->type == 'a'){
+    rgbText(64, 255, 64);
     printf("-------[ ai ]----------------------\n");
   }else{
     printf("-------[ p%c ]----------------------\n", p->type);
@@ -79,13 +80,20 @@ void printPlayerField(Player*p){
 }
 
 void printPlayerFieldHidden(Player*p){
+  boldText();
     if(p->type == 'a'){
-    printf("-------[ ai ]----------------------\n     1  2  3  4  5  6  7  8  9  10\n");
+    rgbText(64, 255, 64);
+    printf("-------[ ai - hidden ]-------------\n");
   }else{
-    printf("-------[ p%c ]----------------------\n     1  2  3  4  5  6  7  8  9  10\n", p->type);
+    printf("-------[ p%c - hidden ]-------------\n", p->type);
   }
+  rgbText(127, 127, 127);
+  printf("     1  2  3  4  5  6  7  8  9  10\n");
   for(int i=0; i<FIELD_Y; i++){
+    boldText();
+    rgbText(127, 127, 127);
     printf(" %2d ", i+1);
+    clearText();
     for(int j=0; j<FIELD_X; j++)
       printFieldItemHidden(p->field[j][i]);
     putchar('\n');

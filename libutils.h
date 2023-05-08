@@ -140,7 +140,7 @@ void playerTurn(Player*pl, Player*pl2){
   printHintbar("ATTACK!", 0);
   byte xcur = 0, ycur = 0;
   setCursor(1, 1);
-  printPlayerField(pl2);
+  printPlayerFieldHidden(pl2);
   printTooltip(pl->boats, "---[ Your boats ]---");
   mesg("Your turn!                     ");
   setCursorWithOffset(xcur, ycur);
@@ -167,10 +167,15 @@ void playerTurn(Player*pl, Player*pl2){
       }
     }
     setCursor(1, 1);
-    printPlayerField(pl2);
-    printTooltip(pl2->boats, "---[ AI boats ]---");
+    printPlayerFieldHidden(pl2);
+    printTooltip(pl->boats, "---[ Your boats ]---");
     setCursorWithOffset(xcur, ycur);
   }
+}
+
+void awaitUserConfirm(){
+  printHintbar("Continue", 0);
+  while(getUserInput() != '\n');
 }
 
 void updateConfig(){};
