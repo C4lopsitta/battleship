@@ -11,3 +11,5 @@ A repository for all the files in my school assignment to make a simple battlesh
 
 If you add any (serious) issues i *might* fix them, also consider that i'm actively developing this project and it's not yet complete.
 
+I also know that this isn't how you're supposed to use header files and that you should use them only for function prototypes and use separate .c files for the actual implementation but i *do not give a fuck* about that.
+
