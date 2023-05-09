@@ -7,6 +7,7 @@
 #include <unistd.h>
 
 #include "libutils.h"
+#include "libmultiplayer.h"
 #include "shipai.h"
 
 int main (int argc, char **argv){
