@@ -1,6 +1,8 @@
 #ifndef __LIB_PRINTERS_H__
 #define __LIB_PRINTERS_H__
 
+#include <stdarg.h>
+
 void printHintbar();
 void mesg(String);
 void mesgWarn(String);
@@ -8,7 +10,6 @@ void printFieldItem(char);
 void printFieldItemHidden(char);
 void printPlayerField(Player*);
 void printPlayerFieldHidden(Player*);
-void mesgDebug(String);
 
 
 void printHintbar(String returnMesg, int showRotate){
@@ -21,6 +22,7 @@ void printHintbar(String returnMesg, int showRotate){
 
 void mesg(String mesgs){
   setCursor(MESG_X, MESG_Y);
+  clearLine();
   printf("%s\n", mesgs);
 }
 
@@ -31,12 +33,17 @@ void mesgWarn(String mesgs){
 }
 
 #ifdef DEBUG
-void mesgDebug(String mesgs){
+
+void mesgDebug(String fmt, ...){
+  va_list args;
+  va_start(args, fmt);
   setCursor(MESG_X+5, MESG_Y);
-  printf("DEBUG : %s\n", mesgs);
+  clearLine();
+  vprintf(fmt, args);
+  va_end(args);
 }
 #else 
-  void mesgDebug(String mesgs){}
+  void mesgDebug(String fmt, ...){}
 #endif // DEBUG
 
 void printFieldItem(char item){

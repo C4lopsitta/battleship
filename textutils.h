@@ -22,6 +22,10 @@ void clearScreen(){
   printf("\033[2J\033[1;1H");
 }
 
+void clearLine(){
+  printf("\33[2K\r");
+}
+
 void getTerminalSize(int* x, int* y){
   struct winsize win;
   ioctl(0, TIOCGWINSZ, &win);

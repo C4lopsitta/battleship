@@ -104,34 +104,18 @@ int getBoatLengthFromChar(char c){
 
 int isBoatFullyHit(Player*p, int x, int y){
   BoatType type = getBoatTypeByChar(p->field[y][x]);
-  int boatLenght = getBoatLengthFromType(type), flag = boatLenght;
-  // if(rotation == 0){ // ->
-    for(int i=0; i<boatLenght && (x+i)<FIELD_Y; i++){
-      if(p->field[y+i][x]==p->field[y][x]) flag--;
-      else break;
-    }
-  // }else if(rotation == 90 || rotation == -270){ // /
-    for(int i=0; i<boatLenght && (x-i)>=0; i++){
-      if(p->field[y][x-i]==p->field[y][x]) flag--;
-      else break;
-    }
-  // }else if(rotation == 180 || rotation == -180){ // <-
-    for(int i=0; i<boatLenght && (y-i)>=0; i++){
-      if(p->field[y-i][x]==p->field[y][x]) flag--;
-      else break;
-    }
-  // }else{ // 360
-    for(int i=0; i<boatLenght && (x+i)<FIELD_X; i++){
-      if(p->field[y][x+i]==p->field[y][x]) flag--;
-      else break;
-    }
-  // }
-  return (flag)?0:-1;
+  if(type == BOAT_SUBMARINE) return -1;
+  if(type == BOAT_DESTROYER && p->field[y][x] == HIT_DESTROYERB) type++;
+  p->boatsHealth[type]--;
+  return (p->boatsHealth[type])?0:-1;
 }
 
 BoatType getBoatTypeByChar(char c){
-  char types[] = {-1, BOAT_CARRIER, BOAT_BATTLESHIP, BOAT_CRUISER, BOAT_DESTROYER, BOAT_DESTROYER, BOAT_SUBMARINE, BOAT_SUBMARINE};
-  c -= 'a'+DELTA;
+  c -= 'a';
+  if(c >= DELTA) c -= DELTA;
+  if(c == 0) return -1;
+  c--;
+  BoatType types[] = {BOAT_CARRIER, BOAT_BATTLESHIP, BOAT_CRUISER, BOAT_DESTROYER,BOAT_DESTROYER, BOAT_SUBMARINE, BOAT_SUBMARINE};
   return types[c];
 }
 
@@ -142,7 +126,6 @@ int hitBoat(Player*p, byte y, byte x){
   if(fieldPos == WATER) return SHOT_MISS;
   if(isBoatFullyHit(p, x, y)){
     p->boats[getBoatTypeByChar(p->field[y][x])]--;
-    mesgDebug("HIT");
   }
   return SHOT_HIT;
 }

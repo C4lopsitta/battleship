@@ -44,8 +44,6 @@
 #define DESTROYERS 2
 #define SUBMARINES 2
 
-#define NOTE_DO 523
-
 typedef char* String;
 typedef char byte;
 
@@ -68,7 +66,7 @@ typedef enum{
 typedef struct{
   byte field[FIELD_Y][FIELD_X];
   int boats[5];
-  // Boats boats;
+  int boatsHealth[5];
   char type;
   byte tries;
 }Player;

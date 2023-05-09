@@ -3,11 +3,12 @@
 
 #include <signal.h>
 #include <termios.h>
+#include "libdefines.h"
 
 void setCursorWithOffset(int, int);
+void mesgDebug(String, ...);
 char getUserInput();
 
-#include "libdefines.h"
 #include "libboats.h"
 #include "textutils.h"
 #include "libprinters.h"
@@ -39,6 +40,11 @@ void setBoats(Player*p){
   p->boats[2] = CRUISERS;
   p->boats[3] = DESTROYERS;
   p->boats[4] = SUBMARINES;
+  p->boatsHealth[0] = 5;
+  p->boatsHealth[1] = 4;
+  p->boatsHealth[2] = 3;
+  p->boatsHealth[3] = 2;
+  p->boatsHealth[4] = 2;
 }
 
 Player* setupPlayer(int playerno){
@@ -167,8 +173,8 @@ void playerTurn(Player*pl, Player*pl2){
       }
     }
     setCursor(1, 1);
-    printPlayerFieldHidden(pl2);
-    printTooltip(pl->boats, "---[ Your boats ]---");
+    printPlayerField(pl2);
+    printTooltip(pl2->boats, "---[ Your boats ]---");
     setCursorWithOffset(xcur, ycur);
   }
 }
