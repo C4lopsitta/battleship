@@ -3,19 +3,21 @@
 
 #include <signal.h>
 #include <termios.h>
-#include "libdefines.h"
 
 void setCursorWithOffset(int, int);
 void mesgDebug(String, ...);
 char getUserInput();
+void error(byte, String, ...);
 
 #include "libboats.h"
 #include "textutils.h"
 #include "libprinters.h"
 
-void sigint_handler(int);
 void fillField(Player*);
 void setBoats(Player*);
+#include "shipai.h"
+
+void sigint_handler(int);
 Player* setupPlayer(int);
 int handleWASDInput(char, byte*, byte*);
 void setCursorWithOffset(int, int);
@@ -26,6 +28,18 @@ void sigint_handler(int sig_num){
   setCursor(1, 1);
   printf("Exiting game\n");
   exit(0);
+}
+
+void error(byte errOp, String fmt, ...){
+  va_list args;
+  setCursor(MESG_X+5, MESG_Y);
+  if(errOp) clearScreen();
+  va_start(args, fmt);
+  clearLine();
+  vprintf(fmt, args);
+  va_end(args);
+  fflush(stdout);
+  if(errOp) exit(errOp);
 }
 
 void fillField(Player*p){
@@ -182,6 +196,103 @@ void playerTurn(Player*pl, Player*pl2){
 void awaitUserConfirm(){
   printHintbar("Continue", 0);
   while(getUserInput() != '\n');
+}
+
+void singlePlayer(){
+  //setup AI player
+  Player* ai = setupAI();
+  //setup player
+  Player* pl = setupPlayer(1);
+  //reset seed for ai
+  srand(time(NULL) / getpid());
+  //query player for boat postions
+  setupPlayerBoats(pl);
+  clearScreen();
+  printHintbar("Confirm action", 0);
+  
+  //main game cycle
+  while(boatsLeft(ai) && boatsLeft(pl)){
+    //player turn
+    playerTurn(pl, ai);
+    //check mid turn if player already won
+    awaitUserConfirm();
+    if(!boatsLeft(ai)) break;
+    //ai turn
+    aiTurn(ai, pl);
+    awaitUserConfirm();
+  }
+  clearScreen();
+  setCursor(1, 1);
+  if(!boatsLeft(ai)) printf("Player won in %d shots!\n", pl->tries);
+  else printf("AI won in %d shots!\n", ai->tries);
+}
+
+String readline(FILE*fp){
+  char buf[128];
+  unsigned char i = 0;
+  for(; buf[i]=fgetc(fp) , buf[i] != EOF , buf[i] != '\n'; i++){};
+  buf[i] = '\0';
+  if(!i) return NULL;
+  return strdup(buf);
+}
+
+void initConfig(){
+  FILE* fp = fopen(CONFIG_FILE, "w");
+  fprintf(fp, "{\n\t\"ai_difficulty\" : \"0\",\n\t\"max_tries\" : \"100\",\n\t\"tooltip\" : \"true\",\n\t\"hintbar\" : \"true\",\n\t\"net_iface\" : \"wlan0\"\n}\n");
+  fclose(fp);
+}
+
+String getJSONKey(String line){
+  char* begin = strchr(line, '"');
+  if(!begin) error(254, "[ERROR] JSON isn't correctly formatted!\n[INFO] A line is missing the first \'\"\' character\n");
+  begin++;
+  char* end = strchr(begin, '"');
+  if(!end) error(254, "[ERROR] JSON isn't correctly formatted!\n[INFO] A line is missing the second \'\"\' character\n");
+  char buf[32], i = 0;
+  for(; buf[i] = *begin, begin<end; i++, begin++){};
+  buf[i] = '\0';
+  return strdup(buf);
+}
+
+String getJSONValue(String line){
+  char* begin = strchr(line, ':');
+  if(!begin) error(253, "[ERROR] Missing \':\' in value!");
+  begin = strchr(begin, '"');
+  if(!begin) error(253, "[ERROR] Missing \'\"\' in value!"); begin++; 
+  char* end = strchr(begin, '"');
+  if(!end) error(253, "[ERROR] Missing ending \'\"\' in value!");
+  char buf[32], i = 0;
+  for(; buf[i] = *begin, begin<end; i++, begin++){};
+  buf[i] = '\0';
+  return strdup(buf);
+}
+
+Config* loadConfig(){
+  FILE* fp = fopen(CONFIG_FILE, "r");
+  if(!fp){
+    initConfig();
+    return loadConfig();
+  }
+  String line = readline(fp);
+  if(!line) error(255, "[ERROR] JSON is empty!\n[INFO] Delete the %s file and retry!\n", CONFIG_FILE);
+  if(!strchr(line, '{')) error(255, "[ERROR] JSON is not correctly formatted!\n[INFO] Either delete the %s file or fix the formatting!\n", CONFIG_FILE);
+  Config* config = (Config*)malloc(sizeof(Config));
+  free(line);
+  while((line = readline(fp))){
+    if(strchr(line, '}')) break;
+    String key = getJSONKey(line), value = getJSONValue(line);
+    free(line);
+    if(!strcmp(key, "ai_difficulty")) config->aiDifficulty = atoi(value);
+    else if(!strcmp(key, "max_tries")) config->maxTries = atoi(value);
+    else if(!strcmp(key, "tooltip")) config->tooltip = !strcmp(value, "true");
+    else if(!strcmp(key, "hintbar")) config->hintbar = !strcmp(value, "true");
+    else if(!strcmp(key, "net_iface")) config->netIface = strdup(value);
+    else error(255, "[ERROR] Unknown key in %s file!\n[INFO] Key: %s\n", CONFIG_FILE, key);
+    free(key);
+    free(value);
+  }
+  fclose(fp);
+  return config;
 }
 
 void updateConfig(){};

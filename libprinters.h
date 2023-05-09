@@ -13,6 +13,7 @@ void printPlayerFieldHidden(Player*);
 
 
 void printHintbar(String returnMesg, int showRotate){
+  if(!config->hintbar) return;
   negativeText();
   setCursor(HINT_X, HINT_Y);
   printf("[W] Move up   [A] Move left  [S] Move down   [D] Move right\n[return] %s   %-s[ctrl-c] Quit game               \n"
@@ -108,6 +109,7 @@ void printPlayerFieldHidden(Player*p){
 }
 
 void printTooltip(int*p, String extramsg){
+  if(!config->tooltip) return;
   setCursor(TOOLTIP_X, TOOLTIP_Y);
   String items[] = {" C ", " B ", "~C~", " D ", " S "};
   printf("---[ TOOLTIP ]----------");
@@ -134,6 +136,7 @@ char printSplashscreen(){
   printf("---[m]   [   HUAMN VS HUMAN    ]---");
   setCursor(10, 5);
   printf("---[s]   [ SERIAL  MULTIPLAYER ]---");
+  clearText();
   setCursor(11, 5);
   printf("---[n]   [ NETWORK MULTIPLAYER ]---");
   setCursor(12, 5);

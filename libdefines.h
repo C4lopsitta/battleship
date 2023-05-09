@@ -44,6 +44,8 @@
 #define DESTROYERS 2
 #define SUBMARINES 2
 
+#define CONFIG_FILE "config.json"
+
 typedef char* String;
 typedef char byte;
 
@@ -66,9 +68,17 @@ typedef enum{
 typedef struct{
   byte field[FIELD_Y][FIELD_X];
   int boats[5];
-  int boatsHealth[5];
+  byte boatsHealth[5];
   char type;
   byte tries;
 }Player;
+
+typedef struct{
+  char aiDifficulty;
+  char maxTries;
+  char tooltip;
+  char hintbar;
+  String netIface;
+}Config;
 
 #endif //endif __LIB_DEFINES_H__
