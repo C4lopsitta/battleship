@@ -30,7 +30,7 @@ int main (int argc, char **argv){
     case 'm': //local pc multiplayer
       break;
     case 'n': //LOCAL network multiplayer
-
+      initNetworkMultiplayer();
       break;
     case 'q': //quit
       exit(0);
