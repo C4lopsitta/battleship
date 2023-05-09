@@ -1,4 +1,6 @@
 {
   "ai_difficulty" : "0",
-  "max_tries" : "100"
+  "max_tries" : "100",
+  "tooltip" : "true",
+  "hintbar" : "true"
 }

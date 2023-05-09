@@ -1,4 +1,3 @@
-
 #define DEBUG
 
 #include <stdio.h>
@@ -21,6 +20,7 @@ int main (int argc, char **argv){
       break;
     case 'c':
       updateConfig();
+      break;
     case 'q':
       exit(0);
   }
