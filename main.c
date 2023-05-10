@@ -28,6 +28,10 @@ int main (int argc, char **argv){
       updateConfig();
       break;
     case 'm': //local pc multiplayer
+      multiPlayer();
+      break;
+    case 's':
+      printf("Unlikeley to be implemented\n");
       break;
     case 'n': //LOCAL network multiplayer
       initNetworkMultiplayer();

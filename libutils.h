@@ -236,6 +236,25 @@ String readline(FILE*fp){
   return strdup(buf);
 }
 
+void ptrArrCopy(String* o, String* d){
+  for(; *d = *o; d++, o++){};
+}
+
+String* split(String s, String d){
+  String tmparr[256];
+  char i = 0;
+  String tok = strtok(s, d);
+  if(!tok) return NULL;
+  tmparr[i] = strdup(tok);
+  for(i = 1; (tok = strtok(NULL, d)) && i<255; i++){
+    tmparr[i] = strdup(tok);
+  }
+  tmparr[i+1] = NULL;
+  String* r = (String*)malloc(sizeof(String) * i + 1);
+  ptrArrCopy(tmparr, r);
+  return r;
+}
+
 void initConfig(){
   FILE* fp = fopen(CONFIG_FILE, "w");
   fprintf(fp, "{\n\t\"ai_difficulty\" : \"0\",\n\t\"max_tries\" : \"100\",\n\t\"tooltip\" : \"true\",\n\t\"hintbar\" : \"true\",\n\t\"net_iface\" : \"wlan0\"\n}\n");

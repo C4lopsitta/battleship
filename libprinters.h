@@ -132,9 +132,9 @@ char printSplashscreen(){
   printf("---[h]   [  HUMAN VS COMPUTER  ]---");
   fflush(stdout);
   setCursor(9, 5);
-  rgbText(127, 127, 127);
   printf("---[m]   [   HUAMN VS HUMAN    ]---");
   setCursor(10, 5);
+  rgbText(127, 127, 127);
   printf("---[s]   [ SERIAL  MULTIPLAYER ]---");
   clearText();
   setCursor(11, 5);
