@@ -14,10 +14,20 @@ void multiPlayer(){
   clearScreen();
   setupPlayerBoats(pl1);
   clearScreen();
-  mesg("Player 2, press enter to start setting up your boats!");
+  hideAndAwait('\n', "Player 2, press [ENTER] to start setting up your boats");
   while(getUserInput() != '\n'){};
   setupPlayerBoats(pl2);
   clearScreen();
+  printHintbar("Confirm action", 0);
+  //main game cycle
+  while(boatsLeft(pl1) && boatsLeft(pl2)){
+    hideAndAwait('\n', "Player 1, press [ENTER] to start your turn");
+    playerTurn(pl1, pl2);
+
+    if(!boatsLeft(pl2)) break;
+    hideAndAwait('\n', "Player 2m press [ENTER] to start your turn");
+    playerTurn(pl2, pl1);
+  }
 }
 
 

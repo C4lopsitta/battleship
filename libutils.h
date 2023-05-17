@@ -187,8 +187,8 @@ void playerTurn(Player*pl, Player*pl2){
       }
     }
     setCursor(1, 1);
-    printPlayerField(pl2);
-    printTooltip(pl2->boats, "---[ Your boats ]---");
+    printPlayerFieldHidden(pl2);
+    printTooltip(pl->boats, "---[ Your boats ]---");
     setCursorWithOffset(xcur, ycur);
   }
 }
@@ -315,5 +315,12 @@ Config* loadConfig(){
 }
 
 void updateConfig(){};
+
+void hideAndAwait(char awaitChar, String mesgs){
+  clearScreen();
+  setCursor(5, 5);
+  printf("%s\n", mesgs);
+  while(getUserInput() != awaitChar){};
+}
 
 #endif //endif __LIBUTILS_H__
