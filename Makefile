@@ -2,9 +2,9 @@ $(shell mkdir -p lib)
 $(shell mkdir -p bin)
 $(shell mkdir -p obj)
 
-$(CC) = gcc
-$(CFLAGS) = "-O2"
-$(LIBS) = boats.so multiplayer.so printers.so shipai.so textutils.so utils.so
+CC = gcc
+CFLAGS = -O2 -march=native
+LIBS = boats.so multiplayer.so printers.so shipai.so textutils.so utils.so
 
 battleship: main.o
 	gcc main.c -o bin/battleship
