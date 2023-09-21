@@ -81,4 +81,6 @@ typedef struct{
   String netIface;
 }Config;
 
+Config* config;
+
 #endif //endif __LIB_DEFINES_H__

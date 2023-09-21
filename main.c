@@ -10,7 +10,6 @@
 
 #include "headers/defines.h"
 
-Config* config;
 #include "headers/utils.h"
 #include "headers/multiplayer.h"
 
