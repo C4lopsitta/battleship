@@ -8,11 +8,11 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "libdefines.h"
+#include "headers/defines.h"
 
 Config* config;
-#include "libutils.h"
-#include "libmultiplayer.h"
+#include "headers/utils.h"
+#include "headers/multiplayer.h"
 
 
 int main (int argc, char **argv){
