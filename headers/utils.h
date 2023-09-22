@@ -4,6 +4,7 @@
 #include <signal.h>
 #include <termios.h>
 
+#include "defines.h"
 #include "boats.h"
 #include "textutils.h"
 #include "printers.h"

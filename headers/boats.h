@@ -7,6 +7,7 @@
 #include "defines.h"
 
 char getBoatCharByType(BoatType, int);
+String getBoatStringByType(BoatType type);
 int getBoatLengthFromType(BoatType);
 int putBoat(Player*, byte, byte, BoatType, int, int);
 void removeBoat(Player*, byte, byte);

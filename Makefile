@@ -5,12 +5,12 @@ CFLAGS = -O2 -march=native
 LIBS = -lboats -lmultiplayer -lprinters -lshipai -ltextutils -lutils
 
 battleship: main.o boats.so multiplayer.so printers.so shipai.so textutils.so utils.so
-	$(CC) $(CFLAGS) obj/main.o -o bin/battleship -Wl,-rpath,./lib/ -L./lib/ $(LIBS)
+	$(CC) $(CFLAGS) obj/main.o -o bin/battleship -Wl,-rpath,./lib -L./lib $(LIBS)
 	rm *.o
 	rm -f obj/
 
 debug: main.o boats.so multiplayer.so printers.so shipai.so textutils.so utils.so
-	$(CC) $(CFLAGS) obj/main.o -o bin/battleship -DDEBUG -Wl,-rpath,./lib/ -L./lib/ $(LIBS)
+	$(CC) $(CFLAGS) obj/main.o -o bin/battleship -DDEBUG -Wl,-rpath,./lib -L./lib $(LIBS)
 	rm *.o
 	rm -f obj/
 

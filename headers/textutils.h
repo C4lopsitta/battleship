@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 #include "defines.h"
+#include "boats.h"
 
 void setCursor(int x, int y);
 void setCursorWithOffset();
