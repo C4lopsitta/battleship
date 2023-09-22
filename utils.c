@@ -293,7 +293,7 @@ Config* loadConfig(){
 }
 
 void updateConfig(){
-
+  return;
 }
 
 void hideAndAwait(char awaitChar, String mesgs){

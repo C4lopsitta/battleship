@@ -29,7 +29,8 @@ String getIfaceIP(String iface){
   ifr.ifr_addr.sa_family = AF_INET;
   strncpy(ifr.ifr_name, iface, IFNAMSIZ-1);
   ioctl(fd, SIOCGIFADDR, &ifr);
-  close(fd);
+  // todo: fix this
+  // close(fd);
   return strdup(inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr));
   //gotten from https://stackoverflow.com/questions/2283494/get-ip-address-of-an-interface-on-linux
 }

@@ -1,6 +1,9 @@
 #ifndef __LIBMULTIPLAYER_H__
 #define __LIBMULTIPLAYER_H__
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -9,6 +12,7 @@
 #include <ifaddrs.h>
 
 #include "defines.h"
+#include "utils.h"
 
 void multiPlayer();
 String getIfaceIP(String iface);

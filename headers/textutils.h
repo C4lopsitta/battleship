@@ -8,6 +8,7 @@
 #include "defines.h"
 
 void setCursor(int x, int y);
+void setCursorWithOffset();
 void clearScreen();
 void clearLine();
 void getTerminalSize(int*, int*);

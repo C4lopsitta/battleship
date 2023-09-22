@@ -33,7 +33,7 @@ void initConfig();
 String getJSONKey(String line);
 String getJSONValue(String line);
 Config* loadConfig();
-void updateConfig(){};
+void updateConfig();
 void hideAndAwait(char awaitChar, String mesgs);
 
 void ptrArrCopy(String* o, String* d){

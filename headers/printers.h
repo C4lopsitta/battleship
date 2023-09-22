@@ -5,8 +5,10 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-#include "textutils.h"
 #include "defines.h"
+#include "utils.h"
+#include "textutils.h"
+#include "boats.h"
 
 void printHintbar();
 void mesg(String);

@@ -1,5 +1,3 @@
-#define DEBUG
-
 #include <stdio.h>
 #include <stdio_ext.h>
 #include <errno.h>
