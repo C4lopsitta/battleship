@@ -1,4 +1,5 @@
 # Battleship
+**I ACCIDENTALY BROKE THE REPO** So this will not work. Will revert asap
 **This game will most likeley run ONLY on Linux because of termios.h**
 
 A repository for all the files in my school assignment to make a simple battleship game with a matrix, i added *quite a lot* of extra things to the original assignment such as:
